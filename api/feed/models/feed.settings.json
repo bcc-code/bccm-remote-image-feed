@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "feeds",
+  "info": {
+    "name": "Feed",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Posts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "feed.post"
+    }
+  }
+}
