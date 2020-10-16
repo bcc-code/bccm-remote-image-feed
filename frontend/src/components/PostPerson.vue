@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <p class="font-4xl text-orange">{{person.Name}}</p>
-        {{person.City}}, {{person.Country}}
+    <div class="pb-2">
+        <p class="text-2xl font-bold text-orange-500">{{person.Name}}</p>
+        <p >{{person.City}}, {{person.Country}}</p>
     </div>
 </template>
 

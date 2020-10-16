@@ -1,12 +1,12 @@
 <template>
     <div v-if="type === 'video'">
-        <video width="320" height="240" controls>
+        <video width="100%">
             <source :src="url" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
     <div v-else-if="type === 'image'">
-        <img :src="url"/>
+        <img :src="url" width="100%"/>
     </div>
 </template>
 

@@ -36,7 +36,7 @@ export default {
       feeds: gql`
           query {
               feeds {
-                  Posts {id, Description, Media {name, width, height, url}}
+                  Posts {id, Person {Name, City, Country}, Description, Media {name, width, height, url}}
               } 
           }
       `
