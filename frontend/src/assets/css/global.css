@@ -5,6 +5,8 @@
 
 @tailwind utilities;
 
+@import 'font.css';
+
 
 .no-scrollbar::-webkit-scrollbar {
     width: 0 !important;

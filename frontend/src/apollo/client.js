@@ -1,7 +1,8 @@
 import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import {ApolloLink} from "apollo-link"
+import authMiddleware from './middleware/auth';
+import errorsMiddleware from './middleware/errors';
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
@@ -12,21 +13,9 @@ const httpLink = createHttpLink({
 // Cache implementation
 const cache = new InMemoryCache();
 
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
-  const token = localStorage.getItem('STRAPI_TOKEN')
-  operation.setContext({
-    headers: {
-      authorization: token ? `Bearer ${token}` : null
-    }
-  })
-
-  return forward(operation)
-})
-
 // Create the apollo client
 const apolloClient = new ApolloClient({
-  link: authMiddleware.concat(httpLink),
+  link: errorsMiddleware.concat(authMiddleware.concat(httpLink)),
   cache,
   defaultOptions: {
     watchQuery: {

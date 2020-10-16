@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueApollo from "vue-apollo";
-import apolloClient from "./apolloClient";
+import apolloClient from "./apollo/client";
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-
 import 'swiper/css/swiper.css'
-
-Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
+import {router} from './router'
+import VueRouter from 'vue-router';
 
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient
 });
 
+Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 Vue.use(VueApollo)
+Vue.use(VueRouter)
 
 new Vue({
-    apolloProvider,
-    render: (h) => h(App)
+  apolloProvider,
+  router,
+  render: (h) => h(App)
 }).$mount("#app");
