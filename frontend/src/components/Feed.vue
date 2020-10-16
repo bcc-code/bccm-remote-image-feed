@@ -3,9 +3,10 @@
     class="w-24 m-8 bg-white bg-opacity-25 rounded-xl overflow-scroll no-scrollbar">
         <div class="flex flex-col text-white pt-8">
             <Post
-            v-for="post in feed.Posts"
+            v-for="(post, index) in feed.Posts"
             :key="post.id"
-            :post="post"/>
+            :post="post"
+            :index="index"/>
         </div>
     </div>
 </template>
