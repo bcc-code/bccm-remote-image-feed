@@ -1,5 +1,5 @@
 <template>
-    <div class="pb-2">
+    <div>
         <p class="text-2xl font-bold text-orange-500">{{person.Name}}</p>
         <p >{{person.City}}, {{person.Country}}</p>
     </div>

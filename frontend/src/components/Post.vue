@@ -1,8 +1,8 @@
 <template>
-    <div class="shadow-lg bg-black p-6 m-4 mb-8 rounded-xl">
-        <PostPerson :person="post.Person"></PostPerson>
+    <div class="shadow-post bg-black mx-4 my-8 rounded">
+        <PostPerson class="px-6 pt-4 pb-2" :person="post.Person"></PostPerson>
         
-        <swiper class="-p-6" ref="mySwiper" :options="swiperOptions">
+        <swiper class="p-6" ref="mySwiper" :options="swiperOptions">
             <swiper-slide 
             v-for="media in post.Media"
             :key="media.url">
@@ -10,7 +10,7 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination" v-if="post.Media.length > 1"></div>
         </swiper>
-        <span class="pt-2">{{post.Description}}</span>
+        <p class="px-6 mt-2 mb-5 font-light">{{post.Description}}</p>
     </div>
 </template>
 

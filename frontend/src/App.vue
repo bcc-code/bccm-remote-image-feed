@@ -1,6 +1,7 @@
 <template>
   <div style="width: 1920px; height: 1920px; background: #777777">
     <input placeholder="Enter password" v-model="password" @keydown.enter="login()" type="password"/>
+      <a href="#" @click="pre = !pre">feeds object</a> <pre v-if="pre">{{feeds}}</pre>
     <Feed v-if="authenticated && feeds" :feed="feeds[0]"/>
   </div>
 </template>
@@ -14,6 +15,7 @@ export default {
   name: 'App',
   data() {
     return {
+      pre: false,
       password: '',
       authenticated: localStorage.getItem('STRAPI_TOKEN')
     }
