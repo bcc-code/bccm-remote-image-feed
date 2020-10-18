@@ -6,7 +6,7 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import {router} from './router'
 import VueRouter from 'vue-router';
-
+import auth from './auth'
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient
@@ -15,6 +15,8 @@ const apolloProvider = new VueApollo({
 Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 Vue.use(VueApollo)
 Vue.use(VueRouter)
+
+Vue.prototype.$auth = auth;
 
 new Vue({
   apolloProvider,

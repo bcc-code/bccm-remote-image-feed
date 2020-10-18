@@ -1,5 +1,5 @@
 <template>
-    <p class="text-xl mb-2">
+    <p class="text-xl leading-tight">
         <span class="font-medium mr-1">{{comment.Username}}</span>
         <RichText :hashtags="hashtags" :input="comment.Text" class="font-light"></RichText>
     </p>

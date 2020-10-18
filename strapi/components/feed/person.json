@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_feed_people",
+  "info": {
+    "name": "Person",
+    "icon": "child"
+  },
+  "options": {},
+  "attributes": {
+    "Username": {
+      "type": "string"
+    },
+    "Location": {
+      "type": "string"
+    },
+    "ProfilePicture": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

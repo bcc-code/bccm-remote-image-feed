@@ -1,6 +1,6 @@
 <template>
-  <div style="width: 1920px; height: 1080px;" class="bg-gray-900">
-    <div style="position: absolute ">
+  <div class="w-full h-full bg-gray-900">
+    <div style="position: absolute">
       <input placeholder="Enter password" v-model="password" @keydown.enter="login()" type="password"/>
       <a href="#" @click="pre = !pre">feeds object</a>
       <pre class="text-white" v-if="pre">{{feeds}}</pre>
@@ -8,7 +8,9 @@
     <div class="w-full h-full flex align-center">
       <Feed v-if="authenticated && feeds"
       :feed="feeds[0]"
-      class="m-auto"/>
+      class="m-auto"
+      ref="feed"
+      @scroll.native="(e) => socket.emit('scroll', $refs.feed.$el.scrollTop)"/>
     </div>
   </div>
 </template>
@@ -17,6 +19,8 @@
 import Feed from '../components/Feed.vue';
 import gql from 'graphql-tag';
 import axios from 'axios';
+import io from 'socket.io-client';
+import {createSocket} from '../helpers/createSocket'
 
 export default {
   name: 'App',
@@ -24,22 +28,22 @@ export default {
     return {
       pre: false,
       password: '',
-      authenticated: localStorage.getItem('STRAPI_TOKEN')
+      authenticated: false,
+      socket: null
     }
   },
   components: {
     Feed
   },
-  methods: {
-    async login() {
-      const { data } = await axios.post(process.env.VUE_APP_STRAPI_API_URL + '/auth/local', {
-        identifier: 'screens@bcc.online',
-        password: this.password,
-      });
-      localStorage.setItem('STRAPI_TOKEN', data.jwt)
+  async mounted() {
+    if(this.$auth.token) {
+      this.socket = await createSocket();
       this.authenticated = true;
-      this.$apollo.queries.feeds.refetch();
     }
+  },
+  async login() {
+      await this.$auth.login(this.password);
+      this.authenticated = true;
   },
   apollo: {
       feeds: gql`
@@ -47,12 +51,13 @@ export default {
               feeds {
                   Posts {
                     id,
-                    Person {Name, City, Country},
+                    Person {Username, Location, ProfilePicture {name, width, height, url}},
                     Description,
                     Media {name, width, height, url},
                     Comments {Username, Text},
                     Likes,
-                    Liked
+                    Liked,
+                    Timestamp
                   }
               } 
           }

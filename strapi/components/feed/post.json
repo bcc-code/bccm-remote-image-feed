@@ -21,12 +21,6 @@
     "Description": {
       "type": "richtext"
     },
-    "Person": {
-      "type": "component",
-      "repeatable": false,
-      "component": "feed.post-person",
-      "required": true
-    },
     "Liked": {
       "type": "boolean",
       "default": false
@@ -39,6 +33,15 @@
       "type": "component",
       "repeatable": true,
       "component": "feed.comment"
+    },
+    "Timestamp": {
+      "type": "datetime",
+      "required": true
+    },
+    "Person": {
+      "type": "component",
+      "repeatable": false,
+      "component": "feed.person"
     }
   }
 }
