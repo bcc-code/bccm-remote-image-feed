@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_feed_comments",
+  "info": {
+    "name": "Comment",
+    "icon": "comment"
+  },
+  "options": {},
+  "attributes": {
+    "Username": {
+      "type": "string",
+      "required": true
+    },
+    "Text": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

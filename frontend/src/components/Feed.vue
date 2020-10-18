@@ -1,7 +1,7 @@
 <template>
-    <div style="position: absolute; top: 50px; left: 1000px; width:414px; height: 750px"
-    class="w-24 m-8 bg-white bg-opacity-25 rounded-xl overflow-scroll no-scrollbar">
-        <div class="flex flex-col text-white pt-8">
+    <div style="width:375px; height: 750px"
+    class="m-8 bg-white rounded-xl overflow-scroll no-scrollbar">
+        <div class="flex flex-col pt-8">
             <Post
             v-for="(post, index) in feed.Posts"
             :key="post.id"

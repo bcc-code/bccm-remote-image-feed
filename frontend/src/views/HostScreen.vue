@@ -1,8 +1,15 @@
 <template>
   <div style="width: 1920px; height: 1080px;" class="bg-gray-900">
-    <input placeholder="Enter password" v-model="password" @keydown.enter="login()" type="password"/>
-      <a href="#" @click="pre = !pre">feeds object</a> <pre v-if="pre">{{feeds}}</pre>
-    <Feed v-if="authenticated && feeds" :feed="feeds[0]"/>
+    <div style="position: absolute ">
+      <input placeholder="Enter password" v-model="password" @keydown.enter="login()" type="password"/>
+      <a href="#" @click="pre = !pre">feeds object</a>
+      <pre class="text-white" v-if="pre">{{feeds}}</pre>
+    </div>
+    <div class="w-full h-full flex align-center">
+      <Feed v-if="authenticated && feeds"
+      :feed="feeds[0]"
+      class="m-auto"/>
+    </div>
   </div>
 </template>
 
@@ -38,7 +45,15 @@ export default {
       feeds: gql`
           query {
               feeds {
-                  Posts {id, Person {Name, City, Country}, Description, Media {name, width, height, url}}
+                  Posts {
+                    id,
+                    Person {Name, City, Country},
+                    Description,
+                    Media {name, width, height, url},
+                    Comments {Username, Text},
+                    Likes,
+                    Liked
+                  }
               } 
           }
       `

@@ -26,6 +26,19 @@
       "repeatable": false,
       "component": "feed.post-person",
       "required": true
+    },
+    "Liked": {
+      "type": "boolean",
+      "default": false
+    },
+    "Likes": {
+      "type": "biginteger",
+      "default": "99"
+    },
+    "Comments": {
+      "type": "component",
+      "repeatable": true,
+      "component": "feed.comment"
     }
   }
 }

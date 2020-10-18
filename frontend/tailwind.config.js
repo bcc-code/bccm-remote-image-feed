@@ -10,6 +10,12 @@ module.exports = {
     fontFamily: {
       'sans': 'ClashGrotesk, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
     },
+    stroke: theme => ({
+      'current': 'currentColor',
+      'red': theme('colors.red.500'),
+      'black': theme('colors.black'),
+      'white': theme('colors.white'),
+    }),
     extend: {
       colors: {
         gray: {

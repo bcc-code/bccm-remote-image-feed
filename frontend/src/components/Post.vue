@@ -1,16 +1,27 @@
 <template>
-    <div class="shadow-post bg-black mx-4 my-8 rounded">
-        <PostPerson :style="headerBG" class="bg-no-repeat bg-contain bg-right-top px-5 pt-5 pb-2" :person="post.Person"></PostPerson>
+    <div class="my-8" >
+        <PostPerson class="px-2 pb-2" :person="post.Person"></PostPerson>
         
-        <swiper class="p-5" ref="mySwiper" :options="swiperOptions">
+        <swiper ref="mySwiper" :options="swiperOptions">
             <swiper-slide 
             v-for="media in post.Media"
             :key="media.url">
                 <PostMedia :media="media"/>
             </swiper-slide>
-            <div class="swiper-pagination" slot="pagination" v-if="post.Media.length > 1"></div>
+            <div v-if="post.Media.length > 1" slot="pagination" :class="'swiper-pagination-'+post.id" class="mt-6 swiper-pagination" style="position:relative" ></div>
+            <div v-else slot="pagination" class="mt-12 w-full h-1">a</div>
         </swiper>
-        <p :style="footerBG" class="bg-no-repeat bg-contain bg-left-bottom px-5 pt-2 pb-5 text-xl font-light">{{post.Description}}</p>
+        <div class="mx-4">
+            <div class="flex z-10 relative w-full" style="top: -2rem">
+                <ClickableHeart class="mr-3" v-model="post.Liked"/>
+                <Comment class="mr-3" />
+                <Share class="flex-grow"/>
+                <Bookmark class=""/>
+            </div>
+            <p class="text-xl" v-if="post.Likes">{{post.Likes}} likes</p>
+            <PostComment :hashtags="true" :comment="{ Username: post.Person.Name, Text: post.Description }"/>
+            <p class="text-sm">A few days ago</p>
+        </div>
     </div>
 </template>
 
@@ -18,48 +29,24 @@
 import gql from 'graphql-tag';
 import PostMedia from './PostMedia.vue';
 import PostPerson from './PostPerson.vue';
-
-const footerImages = [
-    'footer6.png',
-    'footer7.png',
-    'footer10.png',
-    'footer11.png',
-    'footer12.png'
-];
-
-const headerImages = [
-    'header8.png',
-    'header9.png',
-    'header13.png',
-    'header14.png',
-    'header15.png'
-];
+import PostComment from './PostComment.vue';
+import ClickableHeart from './icons/ClickableHeart';
+import Comment from './icons/Comment';
+import Share from './icons/Share';
+import Bookmark from './icons/Bookmark';
+import RichText from './RichText';
 
 export default {
-    components: {PostMedia, PostPerson},
+    components: {PostMedia, PostPerson, PostComment, ClickableHeart, Comment, Share, Bookmark, RichText},
     props: ['post'],
     data() {
         return {
+            liked: this.post.Liked ?? false,
             swiperOptions: {
                 pagination: {
-                    el: '.swiper-pagination'
+                    el: '.swiper-pagination-'+this.post.id
                 },
             }
-        }
-    },
-    computed: {
-        footerBG() {
-            const image = footerImages[this.post.id % footerImages.length];
-            return `background-image: url('${this.getImageUrl(image)}')`
-        },
-        headerBG() {
-            const image = headerImages[this.post.id % headerImages.length];
-            return `background-image: url('${this.getImageUrl(image)}')`
-        }
-    },
-    methods: {
-        getImageUrl(image) {
-            return require('../assets/images/post/'+image)
         }
     }
 };
