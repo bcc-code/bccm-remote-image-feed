@@ -1,4 +1,4 @@
-# brunstadtv-news
+# brunstadtv-feeds
 
 This project uses ***Yarn***, not NPM.
 
