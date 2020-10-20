@@ -8,7 +8,8 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-
+  
+steps:
 - script: |
     git remote add heroku https://heroku:$(heroku_pat)@git.heroku.com/brunstadtv-newsfeed.git
     git subtree push --prefix strapi heroku master
