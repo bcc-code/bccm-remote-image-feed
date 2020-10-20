@@ -28,6 +28,9 @@ export default {
     Feed
   },
   async mounted() {
+    if (this.$route.query.pass) {
+      await this.$api.login('screens@bcc.online', this.$route.query.pass);
+    }
     if (this.$api.token) {
       await this.$api.ensureSocket();
       this.$eventBus.$on('slideChange', this.slideChangeHandler);
