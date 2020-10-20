@@ -12,8 +12,10 @@ export const router = new VueRouter({
         { path: '/:feedIdentifier', component: LiveScreen },
         { path: '/:feedIdentifier/control', component: ControlScreen },
         { path: '/:feedIdentifier/live', component: LiveScreen },
+        { path: '*', redirect: '/' },
     ],
 });
+router.external = (s) => window.location.href=s;
 router.beforeEach((to, from, next) => {
     if (to.name !== 'Login' && !localStorage.getItem('STRAPI_TOKEN')) next({ name: 'Login' })
     else next()

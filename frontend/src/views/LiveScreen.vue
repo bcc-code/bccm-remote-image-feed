@@ -1,7 +1,7 @@
 <template>
   <div style="width: 1920px; height: 1080px;">
     <div class="w-full h-full flex align-center">
-      <Feed v-if="authenticated && feeds"
+      <Feed v-if="authenticated && feeds && feeds[0]"
       :feed="feeds[0]"
       class="m-auto"
       ref="feed"/>
@@ -42,11 +42,9 @@ export default {
   },
   methods: {
       scrollHandler(v) {
-        console.log("live: scrollHandler");
         this.$refs.feed.$el.scrollTop = v
       },
       slideChangeHandler(e) {
-        console.log("live: slideChangeHandler");
         this.$refs.feed.$refs['post' + e.postId][0].swiper.slideTo(e.activeIndex)
       }
   },

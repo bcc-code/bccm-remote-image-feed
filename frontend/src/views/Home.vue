@@ -4,6 +4,9 @@
       <button @click="$router.push({ path: '/login'})" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
         Login
       </button>
+      <button @click="$router.external('https://brunstadtv-newsfeed.herokuapp.com/admin')" class="ml-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+        Admin
+      </button>
     </div>
     <div class="w-full h-full flex items-center justify-center">
       <div v-for="feed in feeds" :key="feed.Identifier"
