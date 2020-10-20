@@ -18,6 +18,8 @@ Vue.use(VueRouter)
 
 Vue.prototype.$auth = auth;
 
+console.log(Vue.prototype.$auth);
+
 new Vue({
   apolloProvider,
   router,
