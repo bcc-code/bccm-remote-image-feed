@@ -12,7 +12,7 @@
         <button @click="$router.push({ path: feed.Identifier + '/control'})" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
           Control
         </button>
-        <button @click="$router.push({ path: feed.Identifier + '/control'})" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+        <button @click="$router.push({ path: feed.Identifier + '/live'})" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
           Live
         </button>
       </div>
