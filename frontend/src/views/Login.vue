@@ -34,7 +34,7 @@
 export default {
   data() {
     return {
-      username: 'screens@bcc.online',
+      username: '',
       password: '',
       error: null,
     }
