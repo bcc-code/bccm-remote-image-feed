@@ -25,18 +25,6 @@
 import gql from 'graphql-tag';
 export default {
   name: 'Home',
-  data() {
-    return {
-      password: '',
-      authenticated: !!this.$api.token,
-    }
-  },
-  methods: {
-    async login() {
-        await this.$api.login(this.password);
-        this.authenticated = true;
-    },
-  },
   apollo: {
       feeds: {
         query: gql`

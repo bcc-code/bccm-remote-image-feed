@@ -8,9 +8,13 @@ export const router = new VueRouter({
     mode: 'history',
     routes: [
         { path: '/', component: Home },
-        { path: '/login', component: Login },
+        { path: '/login', name: 'Login', component: Login },
         { path: '/:feedIdentifier', component: LiveScreen },
         { path: '/:feedIdentifier/control', component: ControlScreen },
         { path: '/:feedIdentifier/live', component: LiveScreen },
-    ]
-})
+    ],
+});
+router.beforeEach((to, from, next) => {
+    if (to.name !== 'Login' && !localStorage.getItem('STRAPI_TOKEN')) next({ name: 'Login' })
+    else next()
+});
