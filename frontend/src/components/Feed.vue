@@ -6,7 +6,8 @@
             v-for="(post, index) in feed.Posts"
             :key="post.id"
             :post="post"
-            :index="index"/>
+            :index="index"
+            :ref="'post'+post.id"/>
         </div>
     </div>
 </template>
@@ -17,7 +18,7 @@ import Post from './Post.vue';
 
 export default {
     components: {Post},
-    props: ['feed'],
+    props: ['feed', 'post-states']
 };
 </script>
 

@@ -2,7 +2,7 @@
     <div class="my-8" >
         <PostPerson class="px-2 pb-2" :person="post.Person"></PostPerson>
         
-        <swiper ref="mySwiper" :options="swiperOptions">
+        <swiper ref="mySwiper" @slideChange="slideChange" :options="swiperOptions">
             <swiper-slide 
             v-for="media in post.Media"
             :key="media.url">
@@ -58,7 +58,17 @@ export default {
             }
         }
     },
+    methods: {
+        slideChange() {
+            var activeIndex = this.$refs.mySwiper.swiperInstance.activeIndex;
+            console.log(activeIndex);
+            this.$eventBus.$emit('slideChange', {postId: this.post.id, activeIndex});
+        }
+    },
     computed: {
+        swiper() {
+            return this.$refs.mySwiper.swiperInstance
+        },
         time() {
             console.log(this.post.Timestamp)
             return getRelativeTime(new Date(this.post.Timestamp));

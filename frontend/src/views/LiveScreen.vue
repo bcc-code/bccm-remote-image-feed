@@ -12,49 +12,66 @@
 <script>
 import Feed from '../components/Feed.vue';
 import gql from 'graphql-tag';
-import {createSocket} from '../helpers/createSocket'
 
 export default {
   name: 'App',
   data() {
     return {
-      pre: false,
+      identifier: this.$route.params.feedIdentifier,
       password: '',
-      authenticated: false,
-      socket: null
+      authenticated: false
     }
   },
   components: {
     Feed
   },
   async mounted() {
-    if(this.$auth.token) {
-      this.socket = await createSocket();
-      this.socket.on('scroll', (v) => this.$refs.feed.$el.scrollTop = v );
+    if(this.$api.token) {
+      await this.$api.ensureSocket();
+      this.$api.socket.on('scroll', this.scrollHandler);
+      this.$api.socket.on('slideChange', this.slideChangeHandler);
       this.authenticated = true;
     }
   },
-  async login() {
-      await this.$auth.login(this.password);
-      this.authenticated = true;
+  destroyed() {
+    this.$api.socket.off('scroll', this.scrollHandler);
+    this.$api.socket.off('slideChange', this.slideChangeHandler);
+  },
+  methods: {
+      scrollHandler(v) {
+        console.log("live: scrollHandler");
+        this.$refs.feed.$el.scrollTop = v
+      },
+      slideChangeHandler(e) {
+        console.log("live: slideChangeHandler");
+        this.$refs.feed.$refs['post' + e.postId][0].swiper.slideTo(e.activeIndex)
+      }
   },
   apollo: {
-      feeds: gql`
-          query {
-              feeds {
-                  Posts {
-                    id,
-                    Person {Username, Location, ProfilePicture {name, width, height, url}},
-                    Description,
-                    Media {name, width, height, url},
-                    Comments {Username, Text},
-                    Likes,
-                    Liked,
-                    Timestamp
-                  }
-              } 
+      feeds: {
+        variables() {
+          return {
+            identifier: this.identifier
           }
-      `
+        },
+        query: gql`
+          query Feed ($identifier: String!) {
+            feeds(where: {Identifier: $identifier}) {
+              Identifier,
+              Posts {
+                id,
+                Person {Username, Location, ProfilePicture {name, width, height, url}},
+                Description,
+                Media {name, width, height, url},
+                Comments {Username, Text},
+                Likes,
+                Liked,
+                Timestamp
+              }
+            } 
+          }
+        `
+      }
   }
 }
 </script>

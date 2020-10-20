@@ -5,7 +5,7 @@
       :feed="feeds[0]"
       class="m-auto"
       ref="feed"
-      @scroll.native="(e) => socket.emit('scroll', $refs.feed.$el.scrollTop)"/>
+      @scroll.native="(e) => $api.socket.emit('scroll', $refs.feed.$el.scrollTop)"/>
     </div>
   </div>
 </template>
@@ -14,45 +14,60 @@
 import Feed from '../components/Feed.vue';
 import gql from 'graphql-tag';
 import axios from 'axios';
-import io from 'socket.io-client';
-import {createSocket} from '../helpers/createSocket'
 
 export default {
   name: 'App',
   data() {
     return {
-      pre: false,
+      identifier: this.$route.params.feedIdentifier,
       password: '',
-      authenticated: false,
-      socket: null
+      authenticated: false
     }
   },
   components: {
     Feed
   },
   async mounted() {
-    if(this.$auth.token) {
-      this.socket = await createSocket();
+    if (this.$api.token) {
+      await this.$api.ensureSocket();
+      this.$eventBus.$on('slideChange', this.slideChangeHandler);
       this.authenticated = true;
     }
   },
+  destroyed() {
+    this.$eventBus.$off('slideChange', this.slideChangeHandler);
+  },
+  methods: {
+      slideChangeHandler(state) {
+        console.log("control: slideChangeHandler");
+        this.$api.socket.emit('slideChange', state);
+      }
+  },
   apollo: {
-      feeds: gql`
-          query {
-              feeds {
-                  Posts {
-                    id,
-                    Person {Username, Location, ProfilePicture {name, width, height, url}},
-                    Description,
-                    Media {name, width, height, url},
-                    Comments {Username, Text},
-                    Likes,
-                    Liked,
-                    Timestamp
-                  }
-              } 
+      feeds: {
+        variables() {
+          return {
+            identifier: this.identifier
           }
-      `
+        },
+        query: gql`
+          query Feed ($identifier: String!) {
+            feeds(where: {Identifier: $identifier}) {
+              Identifier,
+              Posts {
+                id,
+                Person {Username, Location, ProfilePicture {name, width, height, url}},
+                Description,
+                Media {name, width, height, url},
+                Comments {Username, Text},
+                Likes,
+                Liked,
+                Timestamp
+              }
+            } 
+          }
+        `
+      }
   }
 }
 </script>

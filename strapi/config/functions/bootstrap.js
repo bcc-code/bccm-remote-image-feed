@@ -22,7 +22,7 @@ module.exports = async () => {
         //this socket is authenticated, we are good to handle more events from it.
         console.log(`Hello! ${socket.decoded_token}`);
         socket.on('scroll', msg => socket.broadcast.emit('scroll', msg));
-        socket.on('swipe', msg => socket.broadcast.emit('swipe', msg));
+        socket.on('slideChange', msg => socket.broadcast.emit('slideChange', msg));
       });
       strapi.io = io; // register socket io inside strapi main object to use it globally anywhere
     })

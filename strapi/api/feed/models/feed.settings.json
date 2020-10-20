@@ -11,8 +11,9 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Title": {
-      "type": "string"
+    "Identifier": {
+      "type": "string",
+      "unique": true
     },
     "Posts": {
       "type": "component",
