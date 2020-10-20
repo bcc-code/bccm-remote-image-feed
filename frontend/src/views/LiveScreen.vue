@@ -12,8 +12,6 @@
 <script>
 import Feed from '../components/Feed.vue';
 import gql from 'graphql-tag';
-import axios from 'axios';
-import io from 'socket.io-client';
 import {createSocket} from '../helpers/createSocket'
 
 export default {

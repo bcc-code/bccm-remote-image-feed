@@ -7,11 +7,13 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "deploy": "cd .. && git subtree push --prefix strapi heroku master"
   },
   "devDependencies": {},
   "dependencies": {
     "knex": "<0.20.0",
+    "pg": "^8.4.1",
     "socket.io": "^2.3.0",
     "socketio-jwt": "^4.6.2",
     "sqlite3": "latest",
