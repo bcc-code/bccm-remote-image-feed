@@ -30,12 +30,14 @@ export default {
       await this.$api.ensureSocket();
       this.$api.socket.on('scroll', this.scrollHandler);
       this.$api.socket.on('slideChange', this.slideChangeHandler);
+      this.$api.socket.on('play', this.playHandler);
       this.authenticated = true;
     }
   },
   destroyed() {
     this.$api.socket.off('scroll', this.scrollHandler);
     this.$api.socket.off('slideChange', this.slideChangeHandler);
+    this.$api.socket.off('play', this.playHandler);
   },
   methods: {
       scrollHandler(v) {
@@ -43,6 +45,9 @@ export default {
       },
       slideChangeHandler(e) {
         this.$refs.feed.$refs['post' + e.postId][0].swiper.slideTo(e.activeIndex)
+      },
+      playHandler(e) {
+        this.$refs.feed.$refs['post' + e.postId][0].$refs['media'+e.url][0].play()
       }
   },
   apollo: {

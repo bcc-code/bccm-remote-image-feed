@@ -10,6 +10,7 @@
  * See more details here: https://strapi.io/documentation/v3.x/concepts/configurations.html#bootstrap
  */
 const socketioJwt = require('socketio-jwt');
+let connectedSockets = 0;
 module.exports = async () => {
     process.nextTick(() =>{
       var io = require('socket.io')(strapi.server);
@@ -19,12 +20,14 @@ module.exports = async () => {
         timeout: 15000 // 15 seconds to send the authentication message
       }))
       .on('authenticated', function(socket) {
-        //this socket is authenticated, we are good to handle more events from it.
-        console.log(`Hello! ${socket.decoded_token}`);
+        connectedSockets++;
+        console.log(`New authenticated socket! ${connectedSockets} connected`);
         socket.on('scroll', msg => socket.broadcast.emit('scroll', msg));
         socket.on('slideChange', msg => socket.broadcast.emit('slideChange', msg));
-      });
-      strapi.io = io; // register socket io inside strapi main object to use it globally anywhere
+        socket.on('play', msg => socket.broadcast.emit('play', msg));
+      })
+      .on('disconnect', () => connectedSockets--);
+      //strapi.io = io; // register socket io inside strapi main object if we want to use it globally anywhere
     })
   
   };

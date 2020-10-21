@@ -6,7 +6,7 @@
             <swiper-slide 
             v-for="media in post.Media"
             :key="media.url">
-                <PostMedia :media="media"/>
+                <PostMedia :ref="'media'+media.url" :media="media" @play="play(media)"/>
             </swiper-slide>
             <div v-if="post.Media.length > 1" slot="pagination" :class="'swiper-pagination-'+post.id" class="mt-6 swiper-pagination" style="position:relative" ></div>
             <div v-else slot="pagination" class="mt-12 w-full h-1">a</div>
@@ -61,8 +61,10 @@ export default {
     methods: {
         slideChange() {
             var activeIndex = this.$refs.mySwiper.swiperInstance.activeIndex;
-            console.log(activeIndex);
             this.$eventBus.$emit('slideChange', {postId: this.post.id, activeIndex});
+        },
+        play(media) {
+            this.$eventBus.$emit('play', {postId: this.post.id, url: media.url});
         }
     },
     computed: {

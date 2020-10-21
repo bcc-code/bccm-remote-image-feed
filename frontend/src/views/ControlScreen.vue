@@ -31,16 +31,22 @@ export default {
     if (this.$api.token) {
       await this.$api.ensureSocket();
       this.$eventBus.$on('slideChange', this.slideChangeHandler);
+      this.$eventBus.$on('play', this.playHandler);
       this.authenticated = true;
     }
   },
   destroyed() {
     this.$eventBus.$off('slideChange', this.slideChangeHandler);
+    this.$eventBus.$off('play', this.playHandler);
   },
   methods: {
       slideChangeHandler(state) {
         console.log("control: slideChangeHandler");
         this.$api.socket.emit('slideChange', state);
+      },
+      playHandler(state) {
+        console.log("control: playHandler");
+        this.$api.socket.emit('play', state);
       }
   },
   apollo: {
