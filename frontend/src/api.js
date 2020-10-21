@@ -17,6 +17,7 @@ export default new Vue({
           password: password,
         });
         localStorage.setItem('STRAPI_TOKEN', data.jwt);
+        this.token = data.jwt;
       },
       async ensureSocket() {
         if(!this.socket) {
