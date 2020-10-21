@@ -20,6 +20,7 @@ export default {
         type() {
             switch(this.media.url.split('.').pop().toLowerCase()) {
                 case 'mp4':
+                case 'webm':
                 case 'mov':
                 case 'avi':
                 case 'flv':
