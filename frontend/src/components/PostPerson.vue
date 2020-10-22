@@ -1,6 +1,6 @@
 <template>
     <div class="flex items-center">
-        <img :src="url" class="inline object-cover w-12 h-12 mr-2 rounded-full"/>
+        <img :src="url" class="inline object-cover w-12 h-12 mr-3 rounded-full"/>
         <div>
             <p class="text-2xl font-medium leading-none">{{person.Username}}</p>
             <p class="text-2xl">{{person.Location}}</p>
