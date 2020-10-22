@@ -11,7 +11,7 @@
     <div class="w-full h-full flex items-center justify-center">
       <div v-for="feed in feeds" :key="feed.Identifier"
       class="my-6 ">
-        <p class="text-2xl">{{feed.Identifier}}</p>
+        <p class="text-3xl">{{feed.Identifier}}</p>
         <button @click="$router.push({ path: feed.Identifier + '/control'})" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
           Control
         </button>

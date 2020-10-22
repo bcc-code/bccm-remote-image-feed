@@ -8,10 +8,10 @@
             :key="media.url">
                 <PostMedia :ref="'media'+media.url" :media="media" @play="play(media)"/>
             </swiper-slide>
-            <div v-if="post.Media.length > 1" slot="pagination" :class="'swiper-pagination-'+post.id" class="mt-6 swiper-pagination" style="position:relative" ></div>
+            <div v-if="post.Media.length > 1" slot="pagination" :class="'swiper-pagination-'+post.id" class="mt-10 swiper-pagination" style="position:relative" ></div>
             <div v-else slot="pagination" class="mt-12 w-full h-1">a</div>
         </swiper>
-        <div class="mx-4 mb-3">
+        <div class="mx-4 mb-4">
             <div class="flex z-10 relative w-full" style="top: -2rem; margin-bottom: -2rem">
                 <ClickableHeart class="mr-3" v-model="post.Liked"/>
                 <Comment class="mr-3" />
@@ -20,13 +20,13 @@
             </div>
         </div>
         <div class="mx-4">
-            <p class="text-xl mb-1" v-if="post.Likes">{{post.Likes}} likes</p>
+            <p class="text-2xl mb-1" v-if="post.Likes">{{post.Likes}} likes</p>
             <PostComment class="mb-2" :hashtags="true" :comment="{ Username: post.Person.Username, Text: post.Description }"/>
             <PostComment
             v-for="comment in post.Comments"
             :key="comment.Text"
             :comment="comment"/>
-            <p class="mt-2 text-sm">
+            <p class="mt-2 text-lg">
                 {{time}}
             </p>
         </div>
@@ -49,11 +49,13 @@ export default {
     components: {PostMedia, PostPerson, PostComment, ClickableHeart, Comment, Share, Bookmark, RichText},
     props: ['post'],
     data() {
+        var self = this;
         return {
             liked: this.post.Liked ?? false,
             swiperOptions: {
                 pagination: {
-                    el: '.swiper-pagination-'+this.post.id
+                    el: '.swiper-pagination-'+this.post.id,
+        dynamicBullets: true,
                 },
             }
         }
@@ -78,3 +80,12 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next-next {
+    transform: scale(0) !important;
+}
+.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev-prev {
+    transform: scale(0) !important;
+}
+</style>
