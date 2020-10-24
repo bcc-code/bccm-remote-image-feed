@@ -3,6 +3,7 @@
     <div class="w-full h-full flex align-center">
       <Feed v-if="authenticated && feeds && feeds[0]"
       :feed="feeds[0]"
+      style="width:540px; height: 1080px"
       class="m-auto"
       ref="feed"/>
     </div>

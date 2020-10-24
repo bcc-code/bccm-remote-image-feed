@@ -1,6 +1,6 @@
 <template>
-    <div style="width:375px; height: 750px"
-    class="m-8 bg-white rounded-xl overflow-scroll no-scrollbar">
+    <div 
+    class="m-8 bg-white overflow-scroll no-scrollbar">
         <div class="flex flex-col pt-8">
             <Post
             v-for="(post, index) in feed.Posts"
