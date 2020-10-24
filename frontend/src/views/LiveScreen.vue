@@ -42,7 +42,7 @@ export default {
   },
   methods: {
       scrollHandler(v) {
-        this.$refs.feed.$el.scrollTop = v
+        this.$refs.feed.$el.scrollTop = v * (540/370)
       },
       slideChangeHandler(e) {
         this.$refs.feed.$refs['post' + e.postId][0].swiper.slideTo(e.activeIndex)
