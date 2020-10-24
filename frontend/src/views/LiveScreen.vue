@@ -3,7 +3,7 @@
     <div class="w-full h-full flex align-center">
       <Feed v-if="authenticated && feeds && feeds[0]"
       :feed="feeds[0]"
-      style="width:540px; height: 1080px"
+      style="transform: scale(1.44)"
       class="m-auto"
       ref="feed"/>
     </div>
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
       scrollHandler(v) {
-        this.$refs.feed.$el.scrollTop = v * (1080/750)
+        this.$refs.feed.$el.scrollTop = v;
       },
       slideChangeHandler(e) {
         this.$refs.feed.$refs['post' + e.postId][0].swiper.slideTo(e.activeIndex)

@@ -3,8 +3,7 @@
     <div class="w-full h-full flex align-center">
       <Feed v-if="authenticated && feeds"
       :feed="feeds[0]"
-      style="width:375px; height: 750px"
-      class="m-auto rounded-xl"
+      class="m-auto rounded-xl "
       ref="feed"
       @scroll.native="(e) => $api.socket.emit('scroll', $refs.feed.$el.scrollTop)"/>
     </div>
