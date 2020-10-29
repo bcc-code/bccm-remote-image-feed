@@ -32,7 +32,7 @@ module.exports = {
         console.log(file.buffer);
         console.log("Encoding video to webm vp9");
         
-        var tempFilePath = os.tmpdir() + file.name;
+        var tempFilePath = os.tmpdir() + "/"+ file.name;
         await writeFile(tempFilePath, file.buffer);
         const newBuffer = await encodeToVp9(tempFilePath);
         await deleteFile(tempFilePath);

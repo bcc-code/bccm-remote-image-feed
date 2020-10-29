@@ -13,7 +13,6 @@
   "devDependencies": {},
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.20",
-    "bufferstream": "^0.6.2",
     "fluent-ffmpeg": "^2.1.2",
     "knex": "<0.20.0",
     "pg": "^8.4.1",
