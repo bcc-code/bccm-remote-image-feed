@@ -30,11 +30,34 @@ export default {
         }
     },
     computed: {
+        file() {
+            if (!this.type === 'video' || !this.media.formats?.vp9)
+                return this.media;
+
+            var html5Video = document.createElement('video');
+            const browser_supports_canPlayType = html5Video.canPlayType;
+            if (browser_supports_canPlayType) {
+                var canPlayVp9 = html5Video.canPlayType( 'video/webm; codecs="vp9"' );
+                var canPlayh264 = html5Video.canPlayType( 'video/mp4; codecs="avc1.42E01E"' );
+                console.log('canPlayVp9:', canPlayVp9);
+                console.log('canPlayh264:', canPlayh264);
+                if (canPlayVp9 === "probably") {
+                    return this.media.formats.vp9;
+                } else if (canPlayVp9 === "maybe" && canPlayh264 === "") {
+                    return this.media.formats.vp9;
+                }
+            }
+            console.log('browser doesnt support video.canPlayType');
+            return this.media;
+        },
         url() {
-            return process.env.VUE_APP_MEDIA_BASE_URL + this.media.url
+            if(this.file.url.indexOf('https://') !== -1 || this.file.url.indexOf('http://') !== -1) {
+                return this.file.url;
+            }
+            return process.env.VUE_APP_MEDIA_BASE_URL + this.file.url
         },
         type() {
-            switch(this.media.url.split('.').pop().toLowerCase()) {
+            switch(this.media.name.split('.').pop().toLowerCase()) {
                 case 'mp4':
                 case 'webm':
                 case 'mov':

@@ -64,7 +64,7 @@ export default {
                 id,
                 Person {Username, Location, ProfilePicture {name, width, height, url}},
                 Description,
-                Media {name, width, height, url},
+                Media {name, width, height, url, formats},
                 Comments {Username, Text},
                 Likes,
                 Liked,
