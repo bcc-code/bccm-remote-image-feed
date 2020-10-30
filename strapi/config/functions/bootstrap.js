@@ -17,7 +17,7 @@ module.exports = async () => {
       io.sockets
       .on('connection', socketioJwt.authorize({
         secret: process.env.JWT_SECRET,
-        timeout: 15000 // 15 seconds to send the authentication message
+        timeout: 214748364 // lots of milliseconds to send the authentication message
       }))
       .on('authenticated', function(socket) {
         connectedSockets++;
