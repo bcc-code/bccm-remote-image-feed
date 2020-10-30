@@ -29,5 +29,6 @@ module.exports = async () => {
       .on('disconnect', () => connectedSockets--);
       //strapi.io = io; // register socket io inside strapi main object if we want to use it globally anywhere
     })
+    strapi.server.timeout = 0;
   
   };

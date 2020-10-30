@@ -50,6 +50,7 @@ export default {
             return process.env.VUE_APP_MEDIA_BASE_URL + this.file.url
         },
         type() {
+            console.log(this.media.ext);
             return mediaHelper.isVideo(this.media) ? 'video' : 'image';
         }
     }
