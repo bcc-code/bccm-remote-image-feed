@@ -34,7 +34,7 @@ module.exports = {
         
         var tempFilePath = os.tmpdir() + "/"+ file.name;
         await writeFile(tempFilePath, file.buffer);
-        const newBuffer = await encodeToVp9(tempFilePath);
+        const newBuffer = await encodeToVp9(file, tempFilePath);
         await deleteFile(tempFilePath);
 
         return {
@@ -49,7 +49,7 @@ module.exports = {
     }
 }
 
-function encodeToVp9(filePath) {
+function encodeToVp9(file, filePath) {
   return new Promise((resolve) => {
     //const myReadableStream = bufferToStream(buffer);
 
@@ -60,6 +60,7 @@ function encodeToVp9(filePath) {
       console.log('Spawned Ffmpeg with command: ' + commandLine);
     })
     .on('progress', function(progress) {
+      strapi.adminIo.emit('uploadprogress', {name: file.name, progress});
       console.log('Processing: ' + progress.percent + '% done');
     })
     .on('stderr', function(stderrLine) {

@@ -56,4 +56,10 @@ module.exports = {
 
         return this.add(fileData, { user });
     },
+
+    
+
+  async replace(id, { data, file }, { user } = {}) {
+      throw new Error("Replace not supported");
+  },
 }

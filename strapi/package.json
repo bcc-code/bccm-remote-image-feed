@@ -5,6 +5,7 @@
   "description": "A Strapi application",
   "scripts": {
     "develop": "strapi develop",
+    "develop-admin": "strapi develop --watch-admin",
     "serve": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
@@ -18,6 +19,7 @@
     "knex": "<0.20.0",
     "pg": "^8.4.1",
     "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.1",
     "socketio-jwt": "^4.6.2",
     "sqlite3": "latest",
     "strapi": "3.2.3",

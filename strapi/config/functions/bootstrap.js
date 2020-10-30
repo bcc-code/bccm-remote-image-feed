@@ -25,10 +25,18 @@ module.exports = async () => {
         socket.on('scroll', msg => socket.broadcast.emit('scroll', msg));
         socket.on('slideChange', msg => socket.broadcast.emit('slideChange', msg));
         socket.on('play', msg => socket.broadcast.emit('play', msg));
-      })
-      .on('disconnect', () => connectedSockets--);
-      //strapi.io = io; // register socket io inside strapi main object if we want to use it globally anywhere
-    })
+        socket.on('disconnect', () => connectedSockets--);
+      });
+      
+      const adminNamespace = io.of('/admin');
+
+      adminNamespace.on('connection', socket => {
+        socket.emit('hi');
+        socket.on('test', () => console.log("response"));
+      });
+      strapi.adminIo = adminNamespace; // register socket io inside strapi main object if we want to use it globally anywhere
+    });
+
     strapi.server.timeout = 0;
   
   };
