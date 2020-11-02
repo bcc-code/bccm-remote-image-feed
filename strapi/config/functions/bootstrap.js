@@ -37,6 +37,6 @@ module.exports = async () => {
       strapi.adminIo = adminNamespace; // register socket io inside strapi main object if we want to use it globally anywhere
     });
 
-    strapi.server.timeout = 0;
+    strapi.server.timeout = 5*60*1000;
   
   };
