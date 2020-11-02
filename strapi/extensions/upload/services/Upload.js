@@ -15,16 +15,6 @@ module.exports = {
         } = strapi.plugins.upload.services['video-manipulation'];
         
         await strapi.plugins.upload.provider.upload(fileData);
-        
-        const backgroundTask = async () => {
-            const vp9File = await generateVp9(fileData);
-            if (vp9File) {
-                await strapi.plugins.upload.provider.upload(vp9File);
-                delete vp9File.buffer;
-                _.set(fileData, 'formats.vp9', vp9File);
-            }
-        }
-        backgroundTask();
 
         const thumbnailFile = await generateThumbnail(fileData);
         if (thumbnailFile) {
@@ -48,16 +38,31 @@ module.exports = {
         }
 
         const { width, height } = await getDimensions(fileData.buffer);
-
-        delete fileData.buffer;
-
         _.assign(fileData, {
             provider: config.provider,
             width,
             height,
         });
+        
 
-        return this.add(fileData, { user });
+        const response = await this.add(fileData, { user });
+        console.log(response);
+        const id = response.id;
+        
+        const backgroundTask = async () => {
+            const vp9File = await generateVp9(fileData);
+            if (vp9File) {
+                await strapi.plugins.upload.provider.upload(vp9File);
+                delete vp9File.buffer;
+                let newFile = this.fetch({ id });
+                _.set(newFile, 'formats.vp9', vp9File);
+                this.update({ id }, newFile, { user });
+            }
+            delete fileData.buffer;
+        }
+        backgroundTask();
+
+        return response;
     },
 
     
