@@ -1,6 +1,6 @@
 <template>
     <div v-if="type === 'video'">
-        <video @ended="playing = false" @pause="playing = false" :autoplay="!!media.autoplay" ref="video" width="100%" playsinline>
+        <video @ended="playing = false" @pause="playing = false" ref="video" width="100%" playsinline>
             <source :src="url" type="video/mp4">
             Your browser does not support the video tag.
         </video>
