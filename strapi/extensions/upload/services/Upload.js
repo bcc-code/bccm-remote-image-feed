@@ -15,13 +15,16 @@ module.exports = {
         } = strapi.plugins.upload.services['video-manipulation'];
         
         await strapi.plugins.upload.provider.upload(fileData);
-
-        const vp9File = await generateVp9(fileData);
-        if (vp9File) {
-            await strapi.plugins.upload.provider.upload(vp9File);
-            delete vp9File.buffer;
-            _.set(fileData, 'formats.vp9', vp9File);
+        
+        const backgroundTask = async () => {
+            const vp9File = await generateVp9(fileData);
+            if (vp9File) {
+                await strapi.plugins.upload.provider.upload(vp9File);
+                delete vp9File.buffer;
+                _.set(fileData, 'formats.vp9', vp9File);
+            }
         }
+        backgroundTask();
 
         const thumbnailFile = await generateThumbnail(fileData);
         if (thumbnailFile) {
