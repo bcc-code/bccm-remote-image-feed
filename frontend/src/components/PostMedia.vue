@@ -36,7 +36,7 @@ export default {
             if (this.type !== 'video')
                 return this.media;
             
-            if (!this.$route.path.includes("/live")) {
+            if (!this.$route.path.toLowerCase().includes("/live")) {
                 return this.media;
             }
 
