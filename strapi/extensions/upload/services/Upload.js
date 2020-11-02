@@ -65,7 +65,22 @@ module.exports = {
         return response;
     },
 
+    async updateFileInfo(id, { name, alternativeText, caption, autoplay }, { user } = {}) {
+        const dbFile = await this.fetch({ id });
     
+        if (!dbFile) {
+          throw strapi.errors.notFound('file not found');
+        }
+    
+        const newInfos = {
+          name: _.isNil(name) ? dbFile.name : name,
+          alternativeText: _.isNil(alternativeText) ? dbFile.alternativeText : alternativeText,
+          caption: _.isNil(caption) ? dbFile.caption : caption,
+          autoplay: _.isNil(autoplay) ? dbFile.autoplay : autoplay,
+        };
+    
+        return this.update({ id }, newInfos, { user });
+      },
 
   async replace(id, { data, file }, { user } = {}) {
       throw new Error("Replace not supported");
